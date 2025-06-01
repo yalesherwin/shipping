@@ -61,15 +61,13 @@
   </div>
 
   <script>
-    const API_KEY = "LgmENo1njOcHAGp*KHg1aQkpjNAICF@@TA"; // 你的 trial key
-
     async function trackShip() {
       const name = document.getElementById("shipName").value.trim();
       const resultDiv = document.getElementById("result");
       resultDiv.innerHTML = "查询中...";
 
       try {
-        const response = await fetch(`https://api.myshiptracking.com/v1/ships?ship_name=${encodeURIComponent(name)}&apikey=${API_KEY}`);
+        const response = await fetch(`https://shipping.head-6c9.workers.dev/?ship=${encodeURIComponent(name)}`);
         const data = await response.json();
 
         if (data && data.length > 0) {
