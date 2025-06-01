@@ -53,8 +53,8 @@
 <body>
   <header>CHINACNU 客户系统 · 船舶动态跟踪</header>
   <div class="container">
-    <h2>请输入船名（如："PACIFIC HARMONY"）</h2>
-    <input type="text" id="shipName" placeholder="输入英文船名..." />
+    <h2>请输入船舶 IMO 编号（如：9256602）</h2>
+    <input type="text" id="imoInput" placeholder="输入 IMO 编号..." />
     <br />
     <button onclick="trackShip()">查询船舶动态</button>
     <div id="result"></div>
@@ -62,12 +62,12 @@
 
   <script>
     async function trackShip() {
-      const name = document.getElementById("shipName").value.trim();
+      const imo = document.getElementById("imoInput").value.trim();
       const resultDiv = document.getElementById("result");
       resultDiv.innerHTML = "查询中...";
 
       try {
-        const response = await fetch(`https://shipping.head-6c9.workers.dev/?ship=${encodeURIComponent(name)}`);
+        const response = await fetch(`https://shipping.head-6c9.workers.dev/?imo=${encodeURIComponent(imo)}`);
         const data = await response.json();
 
         if (data && data.length > 0) {
@@ -82,7 +82,7 @@
             <p><span class="label">更新时间：</span> ${new Date(ship.LAST_POS_UPDATE * 1000).toLocaleString()}</p>
           `;
         } else {
-          resultDiv.innerHTML = "未找到相关船舶信息，请确认船名是否正确。";
+          resultDiv.innerHTML = "未找到相关船舶信息，请确认 IMO 编号是否正确。";
         }
       } catch (err) {
         resultDiv.innerHTML = `查询出错：${err.message}`;
